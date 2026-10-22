@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Products — Reseller Store</title>
+<style>
+:root{--p:#6c47ff;--p2:#e0479e;--ink:#1d1f33;--muted:#6f738c;--line:#e8e9f3;--green:#12a870;--red:#e5484d;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.45 "Segoe UI",Inter,system-ui,Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#f4f0ff,#fff1f7 55%,#fff8e8) fixed;min-height:100vh}
+button,input,select{font:inherit;color:inherit}
+.top{background:linear-gradient(120deg,var(--p),var(--p2) 65%,#ff9248);color:#fff;padding:18px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top h1{margin:0;font-size:22px}
+.top small{display:block;opacity:.9}
+.sp{flex:1}
+.wrap{max-width:1250px;margin:0 auto;padding:18px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.stat{border-radius:16px;padding:14px 16px;color:#fff;box-shadow:0 10px 22px -12px rgba(0,0,0,.4)}
+.stat b{display:block;font-size:21px}
+.stat span{font-size:12.5px;opacity:.95}
+.bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.bar input[type=search]{flex:1;min-width:200px;padding:11px 16px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.btn{border:0;border-radius:12px;padding:11px 18px;font-weight:700;cursor:pointer;background:#fff;border:1px solid var(--line)}
+.btn:hover{border-color:var(--p)}
+.btn.main{background:linear-gradient(120deg,var(--p),var(--p2));color:#fff;border:0;box-shadow:0 8px 18px -8px var(--p)}
+.top select,.top .btn{border-radius:999px;padding:8px 14px}
+.top .btn{background:rgba(255,255,255,.22);color:#fff;border:1px solid rgba(255,255,255,.5)}.top .btn:hover{background:rgba(255,255,255,.35)}
+.top select{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.45);color:#fff}
+.top select option{color:#222}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{background:var(--card);border-radius:18px;overflow:hidden;box-shadow:0 12px 30px -16px rgba(40,30,100,.5);border:1px solid var(--line);display:flex;flex-direction:column}
+.img{aspect-ratio:1/1;background:#f1f0fa;display:flex;align-items:center;justify-content:center;font-size:72px;position:relative;overflow:hidden}
+.img img{width:100%;height:100%;object-fit:cover;display:block}
+.badge{position:absolute;top:10px;left:10px;font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;color:#fff}
+.badge.low{background:#f59f00}.badge.out{background:var(--red)}
+.info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.name{font-weight:700;font-size:16px}
+.price{font-size:20px;font-weight:800;color:var(--p)}
+.rows{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.rows div{background:#f7f6fd;border-radius:10px;padding:6px 10px}
+.rows small{display:block;color:var(--muted);font-size:11.5px}
+.rows b{font-size:14px}
+.rows .pf b{color:var(--green)}
+.rows .full{grid-column:1/-1}
+.acts{display:flex;gap:8px;margin-top:auto;padding-top:6px}
+.acts .sell{flex:1;background:linear-gradient(120deg,#12a870,#38d9a9);color:#fff;border:0;border-radius:12px;padding:10px;font-weight:700;cursor:pointer}
+.acts .sell:disabled{background:#ced4da;cursor:not-allowed}
+.acts .ed{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer}
+.empty{text-align:center;padding:60px 10px;color:var(--muted)}
+dialog{border:0;border-radius:20px;padding:0;width:min(520px,94vw);box-shadow:0 30px 80px rgba(20,20,60,.45)}
+dialog::backdrop{background:rgba(25,20,60,.5)}
+.dh{padding:16px 22px;color:#fff;font-weight:700;font-size:18px;background:linear-gradient(120deg,var(--p),var(--p2))}
+.db{padding:16px 22px;display:grid;gap:12px;max-height:70vh;overflow:auto}
+label{display:grid;gap:4px;font-size:13px;color:var(--muted);font-weight:600}
+label input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;color:var(--ink);font-weight:400}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pick{display:flex;gap:14px;align-items:center}
+.pick .prev{width:96px;height:96px;border-radius:14px;background:#f1f0fa;display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden;flex:none;border:2px dashed #cfc9f5}
+.pick .prev img{width:100%;height:100%;object-fit:cover}
+.calc{background:#f1fbf6;border-radius:12px;padding:10px 14px;color:#0b7a53;font-weight:600}
+.df{padding:12px 22px 20px;display:flex;gap:10px;justify-content:flex-end}
+.df .del{margin-right:auto;color:var(--red);background:#fff;border:1px solid #f3c6c8}
+.hist{font-size:13px;display:grid;gap:4px}
+.hist div{display:flex;justify-content:space-between;background:#f7f6fd;padding:5px 10px;border-radius:8px}
+.hist button{border:0;background:none;color:var(--red);cursor:pointer}
+footer{text-align:center;color:var(--muted);font-size:12.5px;padding:18px}
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(30px);background:#1d1f33;color:#fff;padding:10px 20px;border-radius:999px;opacity:0;transition:.3s;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+<div class="top">
+  <div style="font-size:32px">🛍️</div>
+  <div><h1>My Products</h1><small>Your reseller store — stock, sales &amp; profit</small></div>
+  <div class="sp"></div>
+  <span id="saved" style="font-size:13px">✅ Saved</span>
+  <select id="cur"><option>Rs</option><option>$</option><option>£</option><option>€</option><option>AED</option></select>
+  <button class="btn" id="exp">💾 Backup</button>
+  <button class="btn" id="imp">♻️ Restore</button>
+  <button class="btn" id="csv">📄 Excel/CSV</button>
+</div>
+<div class="wrap">
+  <div class="stats" id="stats"></div>
+  <div class="bar">
+    <input type="search" id="q" placeholder="🔎  Search products…">
+    <button class="btn main" id="add">＋ Add product</button>
+  </div>
+  <div class="grid" id="grid"></div>
+  <footer>All your data is saved automatically in this browser on this computer. Press “💾 Backup” now and then to keep a safe copy file.</footer>
+</div>
+
+<dialog id="dp">
+  <div class="dh" id="dpTitle">Add product</div>
+  <div class="db">
+    <div class="pick"><div class="prev" id="prev">📷</div>
+      <div><button class="btn" id="pickBtn" type="button">Choose picture</button><div style="font-size:12px;color:var(--muted);margin-top:4px">Shown in the product box</div></div></div>
+    <label>Product name<input id="fName" placeholder="e.g. Bluetooth Earbuds"></label>
+    <div class="two"><label>Buy price (cost)<input id="fBuy" type="number" min="0" step="any"></label>
+      <label>Extra cost / unit (shipping…)<input id="fExtra" type="number" min="0" step="any" value="0"></label></div>
+    <div class="two"><label>Sell price<input id="fSell" type="number" min="0" step="any"></label>
+      <label>Stock (qty you have)<input id="fStock" type="number" min="0" step="1" value="0"></label></div>
+    <div class="calc" id="calc"></div>
+    <div class="hist" id="hist"></div>
+  </div>
+  <div class="df"><button class="btn del" id="fDel">🗑 Delete</button><button class="btn" id="fCancel">Cancel</button><button class="btn main" id="fSave">Save</button></div>
+</dialog>
+
+<dialog id="ds">
+  <div class="dh" id="dsTitle">Sell</div>
+  <div class="db">
+    <div class="two"><label>How many sold?<input id="sQty" type="number" min="1" step="1" value="1"></label>
+      <label>Selling price (each)<input id="sPrice" type="number" min="0" step="any"></label></div>
+    <div class="calc" id="sCalc"></div>
+  </div>
+  <div class="df"><button class="btn" id="sCancel">Cancel</button><button class="btn main" id="sSave">✔ Record sale</button></div>
+</dialog>
+
+<input type="file" id="fImg" accept="image/*" hidden>
+<input type="file" id="fRestore" accept=".json" hidden>
+<div id="toast"></div>
+
+<script>
+(()=>{
+'use strict';
+const KEY='reseller-products-v1';
+const $=s=>document.querySelector(s);
+const EMO=['🎧','⌚','📱','🔋','💡','👟','👜','🧴'];
+const GRAD=[['#e5dbff','#d0bfff'],['#d3f9d8','#b2f2bb'],['#ffe8cc','#ffd8a8'],['#d0ebff','#a5d8ff'],['#ffdeeb','#fcc2d7']];
+const id=()=>Math.random().toString(36).slice(2,10);
+let S;
+try{S=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+if(!S||!Array.isArray(S.products))S={cur:'Rs',products:[]};
+/* remove the old built-in example products (only the untouched ones, never your own) */
+{const demo=['Bluetooth Earbuds','Smart Watch T800','Phone Back Cover','10000mAh Power Bank'];
+ const before=S.products.length;S.products=S.products.filter(p=>!(demo.includes(p.name)&&!p.img&&p.buy+p.extra>0&&p.sales.every(x=>x.d>='2026-10-18'&&x.d<='2026-10-20')&&(p.sales.length===1)&&p.sales[0].q>=5&&!p.edited));
+ if(S.products.length!==before)try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+let okStore=true,t=null,editId=null,sellId=null,tmpImg='';
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(S));okStore=true;$('#saved').textContent='✅ Saved';}catch(e){okStore=false;$('#saved').textContent='⚠️ Not saved (storage full/blocked) — make a Backup!';}}
+function save(){$('#saved').textContent='… saving';clearTimeout(t);t=setTimeout(persist,200);}
+const num=v=>{v=parseFloat(v);return isFinite(v)?v:0;};
+const M=v=>(v<0?'-':'')+S.cur+' '+Math.abs(v).toLocaleString('en-US',{maximumFractionDigits:2});
+const unit=p=>p.sell-p.buy-p.extra;
+const sold=p=>p.sales.reduce((a,s)=>a+s.q,0);
+const rev=p=>p.sales.reduce((a,s)=>a+s.q*s.p,0);
+const prof=p=>p.sales.reduce((a,s)=>a+s.q*(s.p-p.buy-p.extra),0);
+function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2200);}
+function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+
+function render(){
+  const P=S.products,q=$('#q').value.trim().toLowerCase();
+  const st=[['📦 Products',P.length,'#6c47ff,#9775fa'],['🧮 Units in stock',P.reduce((a,p)=>a+p.stock,0),'#1c7ed6,#4dabf7'],
+    ['🏷️ Stock value (cost)',M(P.reduce((a,p)=>a+p.stock*(p.buy+p.extra),0)),'#f76707,#ffa94d'],
+    ['💵 Total sales',M(P.reduce((a,p)=>a+rev(p),0)),'#0ca678,#38d9a9'],['📈 Total profit',M(P.reduce((a,p)=>a+prof(p),0)),'#e64980,#ff8787']];
+  const sb=$('#stats');sb.innerHTML='';
+  st.forEach(([l,v,g])=>{const d=el('div','stat');d.style.background=`linear-gradient(135deg,${g.split(',')[0]},${g.split(',')[1]})`;d.append(el('b','',v),el('span','',l));sb.appendChild(d);});
+  const g=$('#grid');g.innerHTML='';
+  const list=P.filter(p=>!q||p.name.toLowerCase().includes(q));
+  if(!list.length){const e=el('div','empty',P.length?'No product matches your search.':'No products yet — click “＋ Add product” to start.');e.style.gridColumn='1/-1';g.appendChild(e);return;}
+  list.forEach(p=>{const i=[...p.id].reduce((a,ch)=>a+ch.charCodeAt(0),0);
+    const c=el('div','card'),box=el('div','img');
+    if(p.img){const im=new Image();im.src=p.img;im.alt=p.name;box.appendChild(im);}
+    else{const gr=GRAD[i%GRAD.length];box.style.background=`linear-gradient(135deg,${gr[0]},${gr[1]})`;box.textContent=EMO[i%EMO.length];}
+    if(p.stock<=0)box.appendChild(el('span','badge out','Out of stock'));else if(p.stock<=5)box.appendChild(el('span','badge low','Only '+p.stock+' left'));
+    const inf=el('div','info');inf.append(el('div','name',p.name),el('div','price',M(p.sell)));
+    const rows=el('div','rows');
+    [['Buy price',M(p.buy+p.extra)],['Profit / unit',M(unit(p)),'pf'],['In stock',p.stock],['Sold',sold(p)],['Total sales',M(rev(p))],['Total profit',M(prof(p)),'pf']].forEach(([l,v,k])=>{const d=el('div',k||'');d.append(el('small','',l),el('b','',v));rows.appendChild(d);});
+    const acts=el('div','acts'),sell=el('button','sell','💰 Sell'),ed=el('button','ed','✏️ Edit');
+    sell.disabled=p.stock<=0;sell.onclick=()=>openSell(p.id);ed.onclick=()=>openEdit(p.id);acts.append(sell,ed);
+    inf.append(rows,acts);c.append(box,inf);g.appendChild(c);
+  });
+}
+
+/* ----- add / edit ----- */
+function setPrev(src){const pv=$('#prev');pv.innerHTML='';if(src){const im=new Image();im.src=src;pv.appendChild(im);}else pv.textContent='📷';}
+function calcText(){const b=num($('#fBuy').value),x=num($('#fExtra').value),s=num($('#fSell').value),u=s-b-x;
+  $('#calc').textContent=`Profit per unit: ${M(u)}`+(s>0?`  (${(u/s*100).toFixed(1)}% margin)`:'');}
+['fBuy','fExtra','fSell'].forEach(i=>$('#'+i).addEventListener('input',calcText));
+function openEdit(pid){
+  editId=pid;const p=pid?S.products.find(x=>x.id===pid):null;
+  $('#dpTitle').textContent=p?'Edit product':'Add product';
+  $('#fName').value=p?p.name:'';$('#fBuy').value=p?p.buy:'';$('#fExtra').value=p?p.extra:0;$('#fSell').value=p?p.sell:'';$('#fStock').value=p?p.stock:0;
+  tmpImg=p?p.img:'';setPrev(tmpImg);$('#fDel').style.display=p?'':'none';calcText();
+  const h=$('#hist');h.innerHTML='';
+  if(p&&p.sales.length){h.appendChild(el('div','', 'Sales history (tap ✕ to undo a sale):')).style.cssText='background:none;padding:0;font-weight:700';
+    p.sales.map((s,i)=>[s,i]).reverse().forEach(([s,i])=>{const d=el('div');d.append(el('span','',`${s.d} · ${s.q} × ${M(s.p)}`));const b=el('button','','✕');b.onclick=()=>{if(confirm('Remove this sale and put the items back in stock?')){p.stock+=s.q;p.sales.splice(i,1);save();render();openEdit(pid);}};d.appendChild(b);h.appendChild(d);});}
+  $('#dp').showModal();
+}
+$('#add').onclick=()=>openEdit(null);
+$('#pickBtn').onclick=()=>$('#fImg').click();$('#prev').onclick=()=>$('#fImg').click();
+$('#fImg').onchange=e=>{
+  const f=e.target.files[0];e.target.value='';if(!f)return;
+  const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
+    const m=640,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+    const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);tmpImg=c.toDataURL('image/jpeg',.82);setPrev(tmpImg);};im.src=r.result;};r.readAsDataURL(f);
+};
+$('#fCancel').onclick=()=>$('#dp').close();
+$('#fSave').onclick=()=>{
+  const name=$('#fName').value.trim();if(!name){alert('Please type the product name');return;}
+  const d={name,img:tmpImg,buy:num($('#fBuy').value),extra:num($('#fExtra').value),sell:num($('#fSell').value),stock:Math.max(0,Math.round(num($('#fStock').value)))};
+  if(editId){Object.assign(S.products.find(x=>x.id===editId),d);}else S.products.unshift({id:id(),sales:[],...d});
+  save();render();$('#dp').close();toast('Product saved ✓');
+};
+$('#fDel').onclick=()=>{if(confirm('Delete this product and its sales history?')){S.products=S.products.filter(x=>x.id!==editId);save();render();$('#dp').close();}};
+
+/* ----- sell ----- */
+function sellCalc(){const p=S.products.find(x=>x.id===sellId),q=num($('#sQty').value),pr=num($('#sPrice').value);
+  $('#sCalc').textContent=`Total: ${M(q*pr)}   ·   Profit: ${M(q*(pr-p.buy-p.extra))}   ·   Left in stock: ${p.stock-q}`;}
+function openSell(pid){sellId=pid;const p=S.products.find(x=>x.id===pid);$('#dsTitle').textContent='Sell — '+p.name;$('#sQty').value=1;$('#sQty').max=p.stock;$('#sPrice').value=p.sell;sellCalc();$('#ds').showModal();}
+['sQty','sPrice'].forEach(i=>$('#'+i).addEventListener('input',sellCalc));
+$('#sCancel').onclick=()=>$('#ds').close();
+$('#sSave').onclick=()=>{
+  const p=S.products.find(x=>x.id===sellId),q=Math.round(num($('#sQty').value)),pr=num($('#sPrice').value);
+  if(q<1){alert('Enter how many you sold');return;}if(q>p.stock){alert('You only have '+p.stock+' in stock');return;}
+  p.stock-=q;p.sales.push({d:new Date().toISOString().slice(0,10),q,p:pr});save();render();$('#ds').close();toast('Sale recorded 💰');
+};
+
+/* ----- misc ----- */
+$('#q').addEventListener('input',render);
+$('#cur').value=S.cur;$('#cur').onchange=e=>{S.cur=e.target.value;save();render();};
+function dl(name,data,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);}
+const day=()=>new Date().toISOString().slice(0,10);
+$('#exp').onclick=()=>{dl('Products-Backup-'+day()+'.json',JSON.stringify(S),'application/json');toast('Backup downloaded 💾');};
+$('#imp').onclick=()=>$('#fRestore').click();
+$('#fRestore').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+  try{const o=JSON.parse(await f.text());if(!Array.isArray(o.products))throw 0;if(!confirm('Replace all current products with this backup?'))return;S=o;S.cur=S.cur||'Rs';$('#cur').value=S.cur;save();render();toast('Backup restored ♻️');}catch(x){alert('That file is not a valid backup.');}};
+$('#csv').onclick=()=>{
+  const q=v=>'"'+String(v).replace(/"/g,'""')+'"',rows=[['Product','Buy price','Extra cost/unit','Sell price','Profit/unit','In stock','Sold','Total sales','Total profit']];
+  S.products.forEach(p=>rows.push([p.name,p.buy,p.extra,p.sell,unit(p),p.stock,sold(p),rev(p),prof(p)]));
+  dl('Products-'+day()+'.csv','﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n'),'text/csv;charset=utf-8');toast('CSV downloaded — opens in Excel 📄');};
+render();persist();
+})();
+</script>
+</body>
+</html>
